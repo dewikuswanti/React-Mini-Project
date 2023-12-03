@@ -80,7 +80,7 @@ export default function Login() {
         <div className="md:w-3/4 md:h-4/5 bg-[#FF7F50] to-gray-200 md:flex md:flex-row flex-col md:p-28 p-10 h-full md:rounded-3xl relative z-10 hover:bg-red-300 transition duration-300 ease-in-out">
         <div className="flex flex-col">
             <p className="text-4xl md:mt-10 mt-5">
-              Daftar Disini
+              Deefood
             </p>
             <img
               src="../../public/assets/register.png"
