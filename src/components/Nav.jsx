@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "animate.css";
 import {
@@ -12,17 +12,19 @@ import {
 } from "@material-tailwind/react";
 
 import {
-  CalendarDaysIcon,
-  ChartBarIcon,
-  Cog6ToothIcon,
   FolderIcon,
   ArrowLeftOnRectangleIcon,
   Squares2X2Icon,
   Bars3Icon,
+  LightBulbIcon,
+  MapIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Navigation() {
-  const [isMobile, setIsMobile] = React.useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const Navigate = useNavigate();
 
   const handleLogout = () => {
@@ -30,35 +32,43 @@ export default function Navigation() {
     Navigate("/login");
   };
 
-  React.useEffect(() => {
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+  
+
+  useEffect(() => {
     function handleResize() {
       setIsMobile(window.innerWidth <= 768);
     }
 
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
-  const [open, setOpen] = React.useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
   return (
-    <div className="navigation">
+    <div className={`navigation ${darkMode ? 'dark-mode' : ''}`}>
       {isMobile ? (
         //Mobile
         <div className="md:hidden">
           <React.Fragment>
-            <Button
-              className="relative z-10 left-7 top-4 p-3 bg-transparent rounded-none text-xl text-black border-none shadow-none hover:shadow-none animate__animated animate__fadeInUp"
-              onClick={openDrawer}>
-              <Bars3Icon className="h-5 w-5 bg-transparent" />
-            </Button>
-            <Drawer open={open} onClose={closeDrawer}>
+          <Button
+            className="relative z-10 left-7 top-4 p-3 bg-transparent rounded-none text-xl text-black border-none shadow-none hover:shadow-none animate__animated animate__fadeInUp"
+            onClick={openDrawer}
+          >
+            <Bars3Icon className="h-5 w-5 bg-transparent" />
+          </Button>
+          <Drawer open={open} onClose={closeDrawer}>
               <div className="mb-2 flex items-center justify-between p-4">
                 <img
-                  src="../../public/assets/Logo.png"
+                  src="../../public/assets/admin.png"
                   alt=""
                   className="h-10 mt-2"
                 />
@@ -87,39 +97,31 @@ export default function Navigation() {
                   </ListItem>
                 </Link>
                 <ListItem className="hover:bg-white">
-                  <ListItemPrefix>
-                    <CalendarDaysIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  Schedule
+                <ListItemPrefix>
+                  <FolderIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                  Pesanan
                 </ListItem>
                 <ListItem className="hover:bg-white">
                   <ListItemPrefix>
-                    <FolderIcon className="h-5 w-5" />
+                    <MapIcon className="h-5 w-5" />
                   </ListItemPrefix>
-                  Courses
+                    Tracking
                 </ListItem>
-                <ListItem className="hover:bg-white">
+              <ListItem className="hover:bg-white">
+                <ListItemPrefix>
+                  <CurrencyDollarIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                  Keuangan
+                </ListItem>
+              <ListItem className="hover:bg-white focus:bg-white mt-64">
+                <Link to={"/login"} className="flex w-1/2">
                   <ListItemPrefix>
-                    <ChartBarIcon className="h-5 w-5" />
+                    <ArrowLeftOnRectangleIcon className="h-5 w-5" />
                   </ListItemPrefix>
-                  Statistic
-                </ListItem>
-                <ListItem className="hover:bg-white">
-                  <ListItemPrefix>
-                    <Cog6ToothIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  Settings
-                </ListItem>
-                <ListItem
-                  className="hover:bg-white mt-36 ml-1"
-                  onClick={handleLogout}>
-                  <Link to={"/login"} className="flex">
-                    <ListItemPrefix>
-                      <ArrowLeftOnRectangleIcon className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Log out
-                  </Link>
-                </ListItem>
+                  Log out
+                </Link>
+              </ListItem>
               </List>
             </Drawer>
           </React.Fragment>
@@ -127,9 +129,10 @@ export default function Navigation() {
       ) : (
         // Desktop
         <div className="hidden md:flex w-full h-full animate__animated animate__fadeInLeft">
-          <Card className="h-[calc(104vh-2rem)] bg-transparent max-w-[20rem] p-4 shadow-none">
+        <Card className="h-[calc(104vh-2rem)] bg-transparent max-w-[20rem] p-4 shadow-none">
+
             <div className="mb-10 p-4">
-              <img src="../../public/assets/Logo.png" alt="" />
+              <img src="../../public/assets/admin.png" alt="" />
             </div>
             <List className="gap-5 ml-3">
               <Link to={"/"}>
@@ -140,30 +143,24 @@ export default function Navigation() {
                   Dashboard
                 </ListItem>
               </Link>
-              <ListItem className="hover:bg-white focus:bg-white">
-                <ListItemPrefix>
-                  <CalendarDaysIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                Schedule
-              </ListItem>
-              <ListItem className="hover:bg-white focus:bg-white">
+              <ListItem className="hover:bg-white">
                 <ListItemPrefix>
                   <FolderIcon className="h-5 w-5" />
                 </ListItemPrefix>
-                Courses
-              </ListItem>
-              <ListItem className="hover:bg-white focus:bg-white">
+                  Pesanan
+                </ListItem>
+                <ListItem className="hover:bg-white">
+                  <ListItemPrefix>
+                    <MapIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                    Tracking
+                </ListItem>
+              <ListItem className="hover:bg-white">
                 <ListItemPrefix>
-                  <ChartBarIcon className="h-5 w-5" />
+                  <CurrencyDollarIcon className="h-5 w-5" />
                 </ListItemPrefix>
-                Statistic
-              </ListItem>
-              <ListItem className="hover:bg-white focus:bg-white">
-                <ListItemPrefix>
-                  <Cog6ToothIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                Settings
-              </ListItem>
+                  Keuangan
+                </ListItem>
               <ListItem className="hover:bg-white focus:bg-white mt-64">
                 <Link to={"/login"} className="flex w-1/2">
                   <ListItemPrefix>
@@ -172,6 +169,9 @@ export default function Navigation() {
                   Log out
                 </Link>
               </ListItem>
+              <button className="toggle-theme hover:bg-white focus:bg-white md:rounded-3xl" onClick={toggleDarkMode}>
+                <LightBulbIcon className={`h-10 w-10 ${darkMode ? 'text-red-900' : 'text-[#B22222]'}`} />
+              </button>
             </List>
           </Card>
         </div>

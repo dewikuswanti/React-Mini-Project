@@ -1,8 +1,8 @@
-import Login from "./pages/Authentication/Login";
-import Register from "./pages/Authentication/Register";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import DataUser from "./pages/Dashboard/DataUser";
-import ProtectedRoute from "./hoc/ProtectedRoutes";
+import ProtectedRoute from "./contex/Protected";
 
 export const routes = [
   {

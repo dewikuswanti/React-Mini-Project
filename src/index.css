@@ -14,5 +14,10 @@
 }
 
 body {
-  background-color: rgba(242, 235, 198, 1);
+  background-color: #E9967A;
+}
+
+.dark-mode {
+  background-color: #f0e8e8; /* atau warna latar belakang gelap lainnya */
+  color: #fff; /* atau warna teks untuk mode gelap */
 }
